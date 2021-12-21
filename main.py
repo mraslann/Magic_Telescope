@@ -4,6 +4,8 @@ from sklearn import tree
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import confusion_matrix, accuracy_score
+from sklearn.ensemble import AdaBoostClassifier
 import random
 
 
@@ -33,35 +35,53 @@ def split_data(instance):
     return x_train, x_test, y_train, y_test
 
 
+def calculate_accuracy(y_test, y_pred):
+    print("Confusion Matrix: ", confusion_matrix(y_test, y_pred))
+    print("Accuracy: ", accuracy_score(y_test, y_pred))
+
+
 def decision_tree(x_train, x_test, y_train, y_test):
     dt_gini = tree.DecisionTreeClassifier(criterion="gini", random_state=42)
     dt_gini.fit(x_train, y_train)
     y_pred_gini = dt_gini.predict(x_test)
+    calculate_accuracy(y_test, y_pred_gini)
     dt_entropy = tree.DecisionTreeClassifier(criterion="entropy", random_state=42)
     dt_entropy.fit(x_train, y_train)
     y_pred_entropy = dt_entropy.predict(x_test)
+    print("Decision tree:")
+    calculate_accuracy(y_test, y_pred_entropy)
 
 
 def knn(x_train, x_test, y_train, y_test):
     knn = KNeighborsClassifier(n_neighbors=5)
     knn.fit(x_train, y_train)
     y_pred = knn.predict(x_test)
+    print("KNN:")
+    calculate_accuracy(y_test, y_pred)
 
 
 def naive_bayes(x_train, x_test, y_train, y_test):
     gnb = GaussianNB()
     gnb.fit(x_train, y_train)
     y_pred = gnb.predict(x_test)
+    print("Naive Bayes:")
+    calculate_accuracy(y_test, y_pred)
 
 
 def random_forest(x_train, x_test, y_train, y_test):
     rf = RandomForestClassifier(n_estimators=50)
     rf.fit(x_train, y_train)
     y_pred = rf.predict(x_test)
+    print("Random Forest: ")
+    calculate_accuracy(y_test, y_pred)
 
 
 def ada_boost(x_train, x_test, y_train, y_test):
-    pass
+    ada = AdaBoostClassifier(n_estimators=50)
+    ada.fit(x_train, y_train)
+    y_pred = ada.predict(x_test)
+    print("Ada Boost:")
+    calculate_accuracy(y_test, y_pred)
 
 
 if __name__ == '__main__':
@@ -69,4 +89,3 @@ if __name__ == '__main__':
     data = balance_data(data)
     x_train, x_test, y_train, y_test = split_data(data)
     classify(x_train, x_test, y_train, y_test)
-    print(x_train, x_test, y_train, y_test)
