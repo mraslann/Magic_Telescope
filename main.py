@@ -4,7 +4,7 @@ from sklearn import tree
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import confusion_matrix, accuracy_score
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, f1_score, recall_score
 from sklearn.ensemble import AdaBoostClassifier
 import random
 
@@ -39,6 +39,9 @@ def split_data(instance):
 def calculate_accuracy(y_test, y_pred):
     print("Confusion Matrix: ", confusion_matrix(y_test, y_pred))
     print("Accuracy: ", accuracy_score(y_test, y_pred))
+    print("Recall: ", recall_score(y_test, y_pred, pos_label='g'))
+    print("Precision: ", precision_score(y_test, y_pred, pos_label='g'))
+    print("F-Score: ", f1_score(y_test, y_pred, pos_label='g'))
 
 
 def decision_tree(x_train, x_test, y_train, y_test):
