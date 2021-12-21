@@ -14,10 +14,11 @@ def read_data():
 
 
 def balance_data(instance):
+    num_of_gdata = 12331
     for i in range(5644, 0, -1):
-        x = random.randint(0, 12331)
-        if instance.iloc[x, 10] == 'g':
-            instance = instance.drop(instance.index[x])
+        x = random.randint(0, num_of_gdata)
+        instance = instance.drop(instance.index[x])
+        num_of_gdata -= 1
     return instance
 
 
